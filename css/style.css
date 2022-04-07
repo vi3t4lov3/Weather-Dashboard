@@ -1,0 +1,33 @@
+header {
+    background-color: #3655A9;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+    padding: 0.5px;
+}
+main {
+    display: block;
+  }
+main .container {
+    display: flex;
+    flex-direction: row;
+}
+aside {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin: 5px;
+}
+.result {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 5px;
+}
+.today-weather {
+    border: 1px solid #000;
+}
+.days-weather {
+    border: 1px solid #000;
+}
