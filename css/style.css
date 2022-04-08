@@ -16,6 +16,7 @@ main .container {
 aside {
     display: flex;
     flex-direction: column;
+    /* flex-wrap: wrap; */
     width: 20%;
     margin: 5px;
 }
@@ -31,3 +32,65 @@ aside {
 .days-weather {
     border: 1px solid #000;
 }
+
+.form-input {
+
+    padding: 0.75rem;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    margin: 0.625rem 0;
+    font-size: 1.2rem;
+    border: 1px solid #484848;
+    border-radius: 0.3rem;
+  }
+  .btn {
+    text-align: center;
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    margin: 0;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid transparent;
+    outline: none;
+    color: #1a1a1a;
+    background-color: #5BA2E9;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  }
+  .btn.btn-info {
+    background-color: #1bbc9b;
+    color: #ffffff;
+  }
+  
+  .btn.btn-info:hover {
+    background-color: #31e1bd;
+  }
+  .btn.btn-block {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  /* HEIGHT / WIDTH UTILS */
+.w-100 {
+    width: 100%;
+  }
+  
+  .w-75 {
+    width: 75%;
+  }
+  
+  .w-50 {
+    width: 50%;
+  }
+  
+  .w-25 {
+    width: 25%;
+  }
+  
+  .min-100-vh {
+    min-height: 100vh;
+  }
+  
+  .min-100-vw {
+    min-width: 100vw;
+  }

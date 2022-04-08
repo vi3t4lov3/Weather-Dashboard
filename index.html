@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="./css/jass.css">
     <link rel="stylesheet" href="./css/style.css">
 
 </head>
@@ -12,22 +13,22 @@
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-    <main>
-        <div class="container">
-            <aside>
-                <h1>Search for a City:</h1>
-                <input type="text" id="search" placeholder="Atlanta">
-                <button type="button">Search</button>
-                <hr />
-
-            </aside>
-            <div class="result">
-                <div class="today-weather">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus earum nemo, mollitia quas sequi quaerat non illo quasi, natus provident nostrum, vel possimus iste autem! Ab accusamus sunt numquam molestiae.
-                </div>
-                <div class="5days-weather">Test</div>
-            </div>
+    <main class="flex-row justify-space-between">
+        <div class="col-12 col-md-4">
+          <div class="card m-3">
+            <h3 class="card-header text-uppercase">Search for a City:</h3>
+            <form id="user-form" class="card-body">
+              <input name="city" id="" type="text" autofocus="true" class="form-input" />
+              <button type="submit" class="btn btn-info">Search</button>
+            </form>
+          </div>
         </div>
-    </main>
+    
+        <div class="col-12 col-md-8">
+          <h2 class="Results m-3">Results</h2> <span id=""></span></h2>
+          <div id="" class="list-group"></div>
+        </div>
+      </main>
     
     <script src="./js/script.js"></script>
 </body>
