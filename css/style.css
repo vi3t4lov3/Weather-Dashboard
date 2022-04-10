@@ -13,17 +13,21 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border: 1px solid rgba(112, 112, 112, 0.315);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.295);
+    margin-top: 15px;
+    padding: auto;
+
 }
 /* container  */
 .search-container {
   width: 20%;
-  margin-right: 50px;
 }
 .weather-container {
   width: 80%;
   display: flex;
   flex-direction:column;
-
 }
 .forecast{
   border: 1px solid rgba(112, 112, 112, 0.315);
@@ -31,7 +35,7 @@ main {
   margin: 15px;
   float: left;    
   border-radius: 10px;
-  padding: 15px 25px;
+  padding: 10px;
   line-height: 12px;
 }
 .five-days-forecast {
@@ -40,72 +44,35 @@ main {
   margin: 15px;
   /* float: left;     */
   width: 20%;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   display: flex;
   align-content: center;
 }
-
-.city-div {
-  border: 1px solid rgba(112, 112, 112, 0.315);
-  background-color: rgba(255, 255, 255, 0.295);
-  margin: 15px;
-  height: 200px;
-  float: left;    
-  width: 90%;
-  border-radius: 10px;
-  padding: 15px 25px;
-  line-height: 12px;
-}
-aside {
-    display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
-    width: 20%;
-    margin: 5px;
-}
-.result {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin: 5px;
-}
-
 .form-input {
-
     padding: 0.75rem;
     color: #1a1a1a;
     background-color: #ffffff;
-    margin: 0.625rem 0;
     font-size: 1.2rem;
     border: 1px solid #484848;
     border-radius: 0.3rem;
+    width: 100%;
   }
   .btn {
+    margin-top: 10px;
     text-align: center;
     display: inline-block;
     padding: 0.5rem 1.2rem;
-    margin: 0;
     text-decoration: none;
-    font-size: 1rem;
+    width: 100%;
     border-radius: 0.3rem;
     border: 1px solid transparent;
     outline: none;
-    color: #1a1a1a;
+    color: #000;
     background-color: #5BA2E9;
     transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
   }
-  .btn.btn-info {
-    background-color: #1bbc9b;
+  .btn:hover {
+    background-color: #31e1bd;
     color: #ffffff;
   }
-  
-  .btn.btn-info:hover {
-    background-color: #31e1bd;
-  }
-  .btn.btn-block {
-    width: 100%;
-    display: block;
-    text-align: center;
-  }
-  
