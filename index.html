@@ -5,32 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
-    <link rel="stylesheet" href="./css/jass.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+
     <link rel="stylesheet" href="./css/style.css">
 
 </head>
 <body>
     <header>
         <h1>Weather Dashboard</h1>
+        <p id="currentDay" class=""></p>
     </header>
-    <main class="flex-row justify-space-between">
-        <div class="col-12 col-md-4">
-          <div class="card m-3">
-            <h3 class="card-header text-uppercase">Search for a City:</h3>
+    <main class="container">
+      <!-- left aside -->
+        <div class="search-container">
+          <div class="">
+            <h3 class="card-header">Search for a City:</h3>
             <form id="city-search-form" class="card-body">
-              <input name="city" id="city" type="text" value="" autofocus="true" class="form-input" />
+              <input name="city" id="city" type="text" value="Atlanta" autofocus="true" class="form-input" />
               <button type="submit" class="btn btn-info">Search</button>
             </form>
           </div>
         </div>
     
-        <div class="col-12 col-md-8">
-          <h2 class="m-3">Results</h2> 
-          <span id="display-results">fdsgd</span>
-          <!-- <div id="result" class="list-group"></div> -->
+        <!-- right main  -->
+        <div class="weather-container" id="display-weather">
+          <div class="forecast">
+            <h1 id="city-title"></h1>
+            <h3 id="date" ></h3>
+            <icon id="weather-icon"></icon> 
+            <h2 id ="description"></h2>
+            <p id="temperature"></p>
+            <p id="humidity"></p>
+            <p id="wind-speed"></p>
+            <p id="uv-index" class="badge"></p>
+          </div>
+          <div class="five-days-forecast">
+              <div class="forecast-box" id="box1">
+                  <p id="date1">Day 2</p>
+              </div>
+              <div class="forecast-box" id="box2">
+                  <p id="date2">Day 3</p>
+              </div>
+              <div class="forecast-box" id="box3">
+                  <p id="date3">Day 4</p>
+              </div>
+              <div class="forecast-box" id="box4">
+                  <p id="date4">Day 5</p>
+              </div>
+              <div class="forecast-box" id="box5">
+                  <p id="date5">Day 6</p>
+              </div>
+          </div>
         </div>
       </main>
-    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./js/script.js"></script>
 </body>
 </html>

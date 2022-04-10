@@ -6,12 +6,42 @@ header {
     font-size: 25px;
     padding: 0.5px;
 }
-main {
+/* main {
     display: block;
-  }
-main .container {
+  } */
+main {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+/* container  */
+.search-container {
+  width: 20%;
+  margin-right: 50px;
+}
+.weather-container {
+  width: 80%;
+}
+.forecast{
+  margin-top: 20px;
+  padding-left: 20px;
+  border: 1px solid #000;
+}
+.five-days-forecast {
+  display:flex;
+  justify-content: space-between;
+}
+
+.city-div {
+  border: 1px solid rgba(112, 112, 112, 0.315);
+  background-color: rgba(255, 255, 255, 0.295);
+  margin: 15px;
+  height: 200px;
+  float: left;    
+  width: 90%;
+  border-radius: 10px;
+  padding: 15px 25px;
+  line-height: 12px;
 }
 aside {
     display: flex;
@@ -25,12 +55,6 @@ aside {
     flex-direction: column;
     width: 80%;
     margin: 5px;
-}
-.today-weather {
-    border: 1px solid #000;
-}
-.days-weather {
-    border: 1px solid #000;
 }
 
 .form-input {
