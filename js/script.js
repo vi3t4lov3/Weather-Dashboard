@@ -1,7 +1,6 @@
 var currentDay = $('#currentDay');
 var citySeachFormEl = document.querySelector('#city-search-form');
 var cityEl = document.querySelector('#city')
-var displayWeatherResultEl = document.querySelector('city-div')
 var cityTitle = document.querySelector('#city-title');
 var uvIndexEl = document.querySelector('#uv-index');
 var weatherContainerEl = document.querySelector('.weather-container');
@@ -13,15 +12,16 @@ function displayCurrentDay() {
 }
 setInterval(displayCurrentDay, 1000);
 
-
 //hander search form 
 var formSubmitHandler = function(event) {
   event.preventDefault();
   var apiKey = 'a5fc4ee8330414cf46eb731642cac3df'
   var citySearch = cityEl.value.trim(); //trim to clean the space on search text
   if (citySearch) {
+   
     var cities = localStorage.getItem('historicalCitySearch');
     if (cities == null) {
+      
       cities = [citySearch];
     } else {
       // cities.push(citySearch);
@@ -53,7 +53,7 @@ function getCityRepos(cityValue, apikey) {
       // console.log(data)
       var cityName = data.name;
       var weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-      var weatherDescription = data.weather[0].description;
+      var weatherDescription = data.weather[0].main;
       var cityTemp = `Temp: ${data.main.temp} °F`;
       var cityWind = `Wind: ${data.wind.speed} MPH`;
       var cityHumidity = `Humidity: ${data.main.humidity} %`;
@@ -86,7 +86,10 @@ function getForecastUvIndex(lon, lat , apikey) {
       .then(function (data) {
         // console.log(data);
         var cityUVIndex = data.value;
-        var todayDate = new Date(data.date*1000);
+        var todayDate = new Date(data.date);
+        var today = moment.unix(todayDate).format('MM/DD/YYYY');
+
+        //set color for UV index
         if (cityUVIndex > 7) {
           $('#uv-index').addClass("badge badge-danger")
         }
@@ -97,13 +100,13 @@ function getForecastUvIndex(lon, lat , apikey) {
           $('#uv-index').addClass("badge badge-warning")
         } 
         $('#uv-index').append(`UV Index: ${cityUVIndex}`)
-        $('#date').append(todayDate);
+        $('#date').append(today);
       })
 
 }
 //get 5 days forecast
 function get5daysForecast (lon, lat, apikey) {
-  var requestURL =`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}35&lon=${lon}&units=imperial&APPID=${apikey}`;
+  var requestURL =`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${apikey}`;
   fetch  (requestURL)
   .then(function (response) {
     return response.json();
@@ -111,25 +114,27 @@ function get5daysForecast (lon, lat, apikey) {
   })
   .then(function (data) {
     console.log(data)
-    for (i = 7; i < data.length; i ++) {
-      // var dayLists = data.list[i].dt_txt.slice(5, 10)
-      // console.log(dayLists);
+    for (i = 1; i < data.length; i ++) {
+      console.log(i)
     }
-    $("#date1").append(data.list[7].dt_txt.slice(5, 10))
+    var day1 = new Date(data.daily[1].dt);
+    var day1Day = moment.unix(day1).format('MM/DD/YYYY');
+    var fTemp = ((data.daily[0].temp.day-273.15)*1.8)+32
+    $("#date1").append(day1Day)
     $('#date1').append('<br>')
-    var icon = `http://openweathermap.org/img/wn/${data.list[7].weather[0].icon}@2x.png`
+    var icon = `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`
     $('#date1').append(`<img src="${icon}">`);
     $('#date1').append('<br>')
-    $('#date1').append(`${data.list[7].weather[0].description}`)
+    $('#date1').append(`${data.daily[0].weather[0].description}`)
     $('#date1').append('<br>')
-    // $('#date1').attr("style", "font-size: 10px; text-align: center;")
-    $('#date1').append(`Temp: ${data.list[7].main.temp.toFixed(0)}°F`)
+    $('#date1').attr('style', 'text-align: center')
+    $('#date1').append(`Temp: ${fTemp.toFixed(0)}°F`)
     $('#date1').append('<br>')
-    $('#date1').append(`Humidity: ${data.list[7].main.humidity}%`)
+    $('#date1').append(`Humidity: ${data.daily[0].humidity}%`)
     $('#date1').append('<br>')
-    $('#date1').append(`Wind: ${data.list[7].wind.speed} MPH`)
-    
-   
+    $('#date1').append(`Wind: ${data.daily[0].wind_speed} MPH`)
+    $('#date1').append('<br>')
+    $('#date1').append(`UVIndex: ${data.daily[0].uvi}`)
   });
 }
 citySeachFormEl.addEventListener('submit', formSubmitHandler); 

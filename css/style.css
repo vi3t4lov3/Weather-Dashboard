@@ -1,5 +1,5 @@
 header {
-    background-color: #3655A9;
+    background-color: #5BA2E9;
     color: #fff;
     text-align: center;
     font-weight: bold;
@@ -17,7 +17,7 @@ main {
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.295);
     margin-top: 15px;
-    padding: auto;
+    padding: 10px;
 
 }
 /* container  */
@@ -42,15 +42,25 @@ main {
   border: 1px solid rgba(112, 112, 112, 0.315);
   background-color: rgba(255, 255, 255, 0.295);
   margin: 15px;
-  /* float: left;     */
-  width: 20%;
+  float: left;    
   padding: 10px;
   border-radius: 10px;
   display: flex;
   align-content: center;
 }
+.forecast-box {
+  width: 20%;
+  background-color: rgb(230, 230, 230);
+  border: 1px solid rgba(112, 112, 112, 0.315);
+  margin: 15px 1% 0px 1%;
+  border-radius: 10px;
+  padding: 0 4px;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
 .form-input {
-    padding: 0.75rem;
+    padding: 0.25rem;
     color: #1a1a1a;
     background-color: #ffffff;
     font-size: 1.2rem;
@@ -73,6 +83,21 @@ main {
     transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
   }
   .btn:hover {
-    background-color: #31e1bd;
+    background-color: #5BA2E9;
     color: #ffffff;
+  }
+  .badge {
+    border:1px solid #000}
+
+  .badge-danger {
+    color:#fff;
+    background-color:#dc3545
+  }
+  .badge-success {
+    color:#fff;
+    background-color:#28a745
+  }
+  .badge-warning {
+    color:#212529;
+    background-color:#ffc107
   }
