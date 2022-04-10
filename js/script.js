@@ -12,6 +12,8 @@ function displayCurrentDay() {
   currentDay.text(`Today ${today}`);
 }
 setInterval(displayCurrentDay, 1000);
+
+
 //hander search form 
 var formSubmitHandler = function(event) {
   event.preventDefault();
@@ -48,7 +50,7 @@ function getCityRepos(cityValue, apikey) {
       }
     })
     .then(function (data) {
-      console.log(data)
+      // console.log(data)
       var cityName = data.name;
       var weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
       var weatherDescription = data.weather[0].description;
@@ -58,6 +60,7 @@ function getCityRepos(cityValue, apikey) {
       var lon = data.coord.lon;
       var lat = data.coord.lat;
       getForecastUvIndex(lon, lat , apikey)
+      get5daysForecast(lon, lat , apikey)
       // Display text data
       // cityTitle.innerHTML = cityName; 
       $('#city-title').append(cityName);
@@ -81,7 +84,7 @@ function getForecastUvIndex(lon, lat , apikey) {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
+        // console.log(data);
         var cityUVIndex = data.value;
         var todayDate = new Date(data.date*1000);
         if (cityUVIndex > 7) {
@@ -94,10 +97,39 @@ function getForecastUvIndex(lon, lat , apikey) {
           $('#uv-index').addClass("badge badge-warning")
         } 
         $('#uv-index').append(`UV Index: ${cityUVIndex}`)
-        $('#date').append(todayDate.toLocaleString('en-GB', { hour12:false } ));
+        $('#date').append(todayDate);
       })
 
 }
-
-
+//get 5 days forecast
+function get5daysForecast (lon, lat, apikey) {
+  var requestURL =`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}35&lon=${lon}&units=imperial&APPID=${apikey}`;
+  fetch  (requestURL)
+  .then(function (response) {
+    return response.json();
+    // console.log(response)
+  })
+  .then(function (data) {
+    console.log(data)
+    for (i = 7; i < data.length; i ++) {
+      // var dayLists = data.list[i].dt_txt.slice(5, 10)
+      // console.log(dayLists);
+    }
+    $("#date1").append(data.list[7].dt_txt.slice(5, 10))
+    $('#date1').append('<br>')
+    var icon = `http://openweathermap.org/img/wn/${data.list[7].weather[0].icon}@2x.png`
+    $('#date1').append(`<img src="${icon}">`);
+    $('#date1').append('<br>')
+    $('#date1').append(`${data.list[7].weather[0].description}`)
+    $('#date1').append('<br>')
+    // $('#date1').attr("style", "font-size: 10px; text-align: center;")
+    $('#date1').append(`Temp: ${data.list[7].main.temp.toFixed(0)}°F`)
+    $('#date1').append('<br>')
+    $('#date1').append(`Humidity: ${data.list[7].main.humidity}%`)
+    $('#date1').append('<br>')
+    $('#date1').append(`Wind: ${data.list[7].wind.speed} MPH`)
+    
+   
+  });
+}
 citySeachFormEl.addEventListener('submit', formSubmitHandler); 

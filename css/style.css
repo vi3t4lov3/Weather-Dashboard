@@ -21,15 +21,29 @@ main {
 }
 .weather-container {
   width: 80%;
+  display: flex;
+  flex-direction:column;
+
 }
 .forecast{
-  margin-top: 20px;
-  padding-left: 20px;
-  border: 1px solid #000;
+  border: 1px solid rgba(112, 112, 112, 0.315);
+  background-color: rgba(255, 255, 255, 0.295);
+  margin: 15px;
+  float: left;    
+  border-radius: 10px;
+  padding: 15px 25px;
+  line-height: 12px;
 }
 .five-days-forecast {
-  display:flex;
-  justify-content: space-between;
+  border: 1px solid rgba(112, 112, 112, 0.315);
+  background-color: rgba(255, 255, 255, 0.295);
+  margin: 15px;
+  /* float: left;     */
+  width: 20%;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-content: center;
 }
 
 .city-div {
@@ -94,27 +108,4 @@ aside {
     display: block;
     text-align: center;
   }
-  /* HEIGHT / WIDTH UTILS */
-.w-100 {
-    width: 100%;
-  }
   
-  .w-75 {
-    width: 75%;
-  }
-  
-  .w-50 {
-    width: 50%;
-  }
-  
-  .w-25 {
-    width: 25%;
-  }
-  
-  .min-100-vh {
-    min-height: 100vh;
-  }
-  
-  .min-100-vw {
-    min-width: 100vw;
-  }
