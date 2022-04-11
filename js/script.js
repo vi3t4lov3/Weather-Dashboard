@@ -45,7 +45,7 @@ var formSubmitHandler = function(event) {
 
   if (citySearch) {
     cityEl.value = '';
-    localStorage.setItem('citySearchHistory', JSON.stringify(citySearch));
+    localStorage.setItem('citySearchHistory', citySearch);
     cities = city;
     getCityRepos(citySearch, apiKey);
     renderSearchHistory();
