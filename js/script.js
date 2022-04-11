@@ -137,7 +137,7 @@ function get5daysForecast (lon, lat, apikey) {
   .then(function (data) {
     // console.log(data)
     //loop to get next 5 day forecast
-    for (var i = 1; i < data.daily.length-1; i ++) {
+    for (var i = 1; i < data.daily.length-2; i ++) {
     var daily = new Date(data.daily[i].dt);
     var listDay = moment.unix(daily).format('MM/DD/YYYY');
     var fTemp = ((data.daily[i].temp.day-273.15)*1.8)+32

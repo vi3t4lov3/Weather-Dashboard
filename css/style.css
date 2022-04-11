@@ -60,8 +60,7 @@ main{
   align-content: center;
 }
 .forecast-box {
-    width: 15%;
-    /* height: 140px; */
+    width: 20%;
     background-color: rgb(230, 230, 230);
     float: left;
     border: 1px solid rgba(112, 112, 112, 0.315);
