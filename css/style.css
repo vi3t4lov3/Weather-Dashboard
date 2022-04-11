@@ -9,7 +9,8 @@ header {
 /* main {
     display: block;
   } */
-main {
+main{
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -17,12 +18,13 @@ main {
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.295);
     margin-top: 15px;
-    padding: 10px;
+    /* padding: 10px; */
 
 }
 /* container  */
 .search-container {
   width: 20%;
+  margin: 15px;
 }
 .weather-container {
   align-items: center;
@@ -31,6 +33,7 @@ main {
   flex-direction:column;
 }
 .forecast{
+  /* width: 100%; */
   border: 1px solid rgba(112, 112, 112, 0.315);
   background-color: rgba(255, 255, 255, 0.295);
   margin: 15px;  
@@ -39,6 +42,7 @@ main {
   line-height: 12px;
 }
 .currentday {
+  width: 100%;
   display: flex;
   align-items: center;
 }
@@ -46,6 +50,7 @@ main {
   text-align: center;
 }
 .five-days-forecast {
+  width: 100%;
   background-color: rgba(255, 255, 255, 0.295);
   margin: 15px;   
   padding: 10px;
@@ -55,15 +60,17 @@ main {
   align-content: center;
 }
 .forecast-box {
-  width: 20%;
-  background-color: rgb(230, 230, 230);
-  border: 1px solid rgba(112, 112, 112, 0.315);
-  margin: 15px 1% 0px 1%;
-  border-radius: 10px;
-  padding: 0 4px;
-  display: flex;
-  flex-direction: row;
-  /* flex-wrap: wrap; */
+    width: 15%;
+    /* height: 140px; */
+    background-color: rgb(230, 230, 230);
+    float: left;
+    border: 1px solid rgba(112, 112, 112, 0.315);
+    margin: 15px 1% 0px 1%;
+    border-radius: 10px;
+    padding: 0 4px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
 }
 .form-input {
     padding: 0.25rem;
