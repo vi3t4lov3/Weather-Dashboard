@@ -4,7 +4,7 @@ var cityHistoryEl = document.querySelector('#history-search');
 var cityEl = document.querySelector('#city')
 var cityTitle = document.querySelector('#city-title');
 var uvIndexEl = document.querySelector('#uv-index');
-var weatherContainEl = document.querySelector('#weather-container');
+// var weatherContainEl = document.querySelector('#weather-container');
 
 var cities = [] ;
 //display the current day
@@ -32,8 +32,8 @@ function buttonSubmitHandler(event) {
   var cityButton = $(event.target)
   var city = $(event.target).text();
   event.preventDefault();
-  getCityRepos(city);
-
+  // getCityRepos(city);
+  alert('test')
 }
 
 //hander search button 
@@ -48,14 +48,16 @@ var formSubmitHandler = function(event) {
     localStorage.setItem('citySearchHistory', citySearch);
     cities = city;
     getCityRepos(citySearch, apiKey);
+    buttonSubmitHandler(city);
     renderSearchHistory();
-    // console.log(cities);
+    // console.log(cities); 
   } 
    else {
-    $('#display-weather').empty();
+    
     cityEl.value = 'Please enter a city'
   }
 }
+
 //default city weather display
 function homeWeatherDisplay(){
   var citySearch = 'Atlanta';
@@ -64,6 +66,7 @@ function homeWeatherDisplay(){
 }
 // get base forcast information buy search city 
 function getCityRepos(citySearch, apikey) {
+  $('#forecast').empty();
   var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=imperial&appid=${apikey}`
   
   fetch(requestURL)
@@ -76,34 +79,39 @@ function getCityRepos(citySearch, apikey) {
       }
     })
     .then(function (data) {
+      // console.log(data);
       var todayDate = new Date(data.dt);
       var today = moment.unix(todayDate).format('MM/DD/YYYY');
       var cityName = data.name;
       var weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
       var weatherDescription = data.weather[0].description;
-      var cityTemp = `Temp: ${data.main.temp} °F`;
+      var weatherMain = data.weather[0].main
+      var cityTemp = `Temp: ${data.main.temp.toFixed(0)} °F`;
       var cityWind = `Wind: ${data.wind.speed} MPH`;
       var cityHumidity = `Humidity: ${data.main.humidity} %`;
       var lon = data.coord.lon;
       var lat = data.coord.lat;
       getForecastUvIndex(lon, lat , apikey)
-      get5daysForecast(lon, lat , apikey)
-      // Display text data
-      $('#date').append(` (${today})`);
-      $('#city-title').append(cityName);
-      $('#weather-icon').append(`<img src='${weatherIcon}'>`);
-      $('#description').append(`<h5>${weatherDescription}</h5>`);
-      $('#temperature').append(cityTemp);
-      $('#humidity').append(cityHumidity);
-      $('#wind-speed').append(cityWind);
-
+      get5daysForecast(lon, lat , apikey)  
+      $('#forecast').append(`<div class="currentday">
+      <h1 id="city-title">${cityName}</h1>
+      <h4 id="date">Today ${weatherDescription}</h4>
+      </div> 
+      <div class="currentdaydetail">
+        <p class="icon-weather" id="weather-icon"><img src='${weatherIcon}'></p> 
+        <p id ="main">${weatherMain}</p>
+        <p id="temperature">${cityTemp}</p>
+        <p id="humidity">${cityHumidity}</p>
+        <p id="wind-speed">${cityWind}</p>
+        <p id="uv-index"></p>
+      </div>
+      `);
     });
     
 }
 
 // get uv index from the lat, lon
 function getForecastUvIndex(lon, lat , apikey) {
-
   var requestURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${apikey}&lat=${lat}&lon=${lon}`;
   
       fetch (requestURL)
@@ -128,6 +136,7 @@ function getForecastUvIndex(lon, lat , apikey) {
 }
 //get 5 days forecast
 function get5daysForecast (lon, lat, apikey) {
+  $('#five-days-forecast').empty();
   var requestURL =`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${apikey}`;
   fetch  (requestURL)
   .then(function (response) {
@@ -135,7 +144,7 @@ function get5daysForecast (lon, lat, apikey) {
     // console.log(response)
   })
   .then(function (data) {
-    // console.log(data)
+    console.log(data)
     //loop to get next 5 day forecast
     for (var i = 1; i < data.daily.length-2; i ++) {
     var daily = new Date(data.daily[i].dt);
@@ -151,7 +160,7 @@ function get5daysForecast (lon, lat, apikey) {
     $(`#${id}`).append(`<p class='icon-weather'><img src="${listWeatherIcon}"></p>`);
     $(`#${id}`).append(`<h6>${data.daily[i].weather[0].description}</h6>`)
     $(`#${id}`).attr('style', 'text-align: center');
-    $(`#${id}`).append(`<p>Temp: ${fTemp.toFixed(0)}°F</p>`)
+    $(`#${id}`).append(`<p>Temp: ${fTemp.toFixed(0)} °F</p>`)
     $(`#${id}`).append(`<p>Humidity: ${data.daily[i].humidity}%</p>`)
     $(`#${id}`).append(`<p>Wind: ${data.daily[i].wind_speed} MPH</p>`)
     };
