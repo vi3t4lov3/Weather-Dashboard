@@ -4,9 +4,9 @@ var cityHistoryEl = document.querySelector('#history-search');
 var cityEl = document.querySelector('#city')
 var cityTitle = document.querySelector('#city-title');
 var uvIndexEl = document.querySelector('#uv-index');
+var pageLoad = true;
 // var weatherContainEl = document.querySelector('#weather-container');
 
-var cities = [] ;
 //display the current day
 function displayCurrentDay() {
   var today = moment().format('MM/DD/YYYY');
@@ -16,50 +16,61 @@ setInterval(displayCurrentDay, 1000);
 
 //render search cities
 function renderSearchHistory() {
+  
+  var cities = JSON.parse(localStorage.getItem('citySearchHistory')) || [];
+  console.log(cities);
   for (var i = 0; i < cities.length; i++) {
     displaySearchCity(cities[i]);
-    // console.log()
   }
 }
-function displaySearchCity(cities) {
+
+function displaySearchCity(city) {
   var newSearch = $(`<button class ='btn'>`);
-  newSearch.text(cities);
+  newSearch.text(city);
   $('#history-search').append(newSearch);
 
 }
 //button click formSubmitHandler
-function buttonSubmitHandler(event) {
-  var cityButton = $(event.target)
-  var city = $(event.target).text();
-  event.preventDefault();
-  // getCityRepos(city);
-  alert('test')
-}
+// function buttonSubmitHandler(event) {
+//   var cityButton = $(event.target)
+//   var city = $(event.target).text();
+//   event.preventDefault();
+//   // getCityRepos(city);
+//   alert('test')
+// }
 
 //hander search button 
 var formSubmitHandler = function(event) {
   event.preventDefault();
   var apiKey = 'a5fc4ee8330414cf46eb731642cac3df'
-  var citySearch = cityEl.value.trim(); 
-  var city = localStorage.getItem('citySearchHistory');
+  var citySearch = cityEl.value.trim();
+  var cities = JSON.parse(localStorage.getItem('citySearchHistory')) || [];
+
+  console.log(cities);
 
   if (citySearch) {
     cityEl.value = '';
-    localStorage.setItem('citySearchHistory', citySearch);
-    cities = city;
+    if (!cities.includes(citySearch)) {
+      cities.push(citySearch);
+    }
+    localStorage.setItem('citySearchHistory', JSON.stringify(cities));
     getCityRepos(citySearch, apiKey);
-    buttonSubmitHandler(city);
+    // buttonSubmitHandler(city);
     renderSearchHistory();
     // console.log(cities); 
   } 
    else {
-    
     cityEl.value = 'Please enter a city'
   }
 }
 
 //default city weather display
 function homeWeatherDisplay(){
+
+  /**
+   * get current location from browser
+   */
+
   var citySearch = 'Atlanta';
   var apikey = 'a5fc4ee8330414cf46eb731642cac3df';
   getCityRepos(citySearch, apikey)
@@ -167,5 +178,6 @@ function get5daysForecast (lon, lat, apikey) {
   });
 }
 citySeachFormEl.addEventListener('submit', formSubmitHandler); 
-cityHistoryEl.addEventListener('click', buttonSubmitHandler); 
-homeWeatherDisplay()
+// cityHistoryEl.addEventListener('click', buttonSubmitHandler); 
+renderSearchHistory()
+homeWeatherDisplay();
