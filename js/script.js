@@ -2,10 +2,9 @@ var currentDay = $('#currentDay');
 var citySeachFormEl = document.querySelector('#city-search-form');
 var cityHistoryEl = document.querySelector('#history-search');
 var cityEl = document.querySelector('#city')
-var cityTitle = document.querySelector('#city-title');
-var uvIndexEl = document.querySelector('#uv-index');
-var pageLoad = true;
-// var weatherContainEl = document.querySelector('#weather-container');
+
+//global variables
+var apikey = 'a5fc4ee8330414cf46eb731642cac3df';
 
 //display the current day
 function displayCurrentDay() {
@@ -14,79 +13,61 @@ function displayCurrentDay() {
 }
 setInterval(displayCurrentDay, 1000);
 
-//render search cities
-function renderSearchHistory() {
-  
-  var cities = JSON.parse(localStorage.getItem('citySearchHistory')) || [];
-  console.log(cities);
-  for (var i = 0; i < cities.length; i++) {
-    displaySearchCity(cities[i]);
-  }
+//default city weather display
+function homeWeatherDisplay(){
+  var citySearch = 'Atlanta';
+  getCityRepos(citySearch)
 }
 
-function displaySearchCity(city) {
-  var newSearch = $(`<button class ='btn'>`);
-  newSearch.text(city);
-  $('#history-search').append(newSearch);
-
-}
-//button click formSubmitHandler
-// function buttonSubmitHandler(event) {
-//   var cityButton = $(event.target)
-//   var city = $(event.target).text();
-//   event.preventDefault();
-//   // getCityRepos(city);
-//   alert('test')
-// }
-
-//hander search button 
+//hander search when we click search button 
 var formSubmitHandler = function(event) {
   event.preventDefault();
-  var apiKey = 'a5fc4ee8330414cf46eb731642cac3df'
   var citySearch = cityEl.value.trim();
   var cities = JSON.parse(localStorage.getItem('citySearchHistory')) || [];
-
   console.log(cities);
-
   if (citySearch) {
     cityEl.value = '';
     if (!cities.includes(citySearch)) {
       cities.push(citySearch);
     }
     localStorage.setItem('citySearchHistory', JSON.stringify(cities));
-    getCityRepos(citySearch, apiKey);
-    // buttonSubmitHandler(city);
-    renderSearchHistory();
-    // console.log(cities); 
+    getCityRepos(citySearch);
+    renderSearchHistory(citySearch);
   } 
    else {
     cityEl.value = 'Please enter a city'
   }
 }
 
-//default city weather display
-function homeWeatherDisplay(){
+//render search cities
+function renderSearchHistory(citySearch) {
+   var historySearchButton = $('<button>'); //create a var for the button
+   historySearchButton.addClass('btn');
+   historySearchButton.text(citySearch);
+   historySearchButton.attr('data-city', citySearch);
+   $('#history-search').append(historySearchButton);
 
-  /**
-   * get current location from browser
-   */
-
-  var citySearch = 'Atlanta';
-  var apikey = 'a5fc4ee8330414cf46eb731642cac3df';
-  getCityRepos(citySearch, apikey)
 }
+
+// button click handler
+function buttonClicktHandler(event) {
+ var target = event.target;
+ var city = target.getAttribute('data-city');
+ getCityRepos(city)
+}
+
 // get base forcast information buy search city 
-function getCityRepos(citySearch, apikey) {
+function getCityRepos(citySearch) {
   $('#forecast').empty();
   var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${citySearch}&units=imperial&appid=${apikey}`
   
   fetch(requestURL)
     .then(function (response) {
       if (response.ok) {
-        console.log('status working...')
+        console.log('Weather data is working...')
         return response.json();
       } else {
-        console.log('status not working...');
+        console.log('The city you search not exit or the api may not be available at this time.');
       }
     })
     .then(function (data) {
@@ -102,8 +83,8 @@ function getCityRepos(citySearch, apikey) {
       var cityHumidity = `Humidity: ${data.main.humidity} %`;
       var lon = data.coord.lon;
       var lat = data.coord.lat;
-      getForecastUvIndex(lon, lat , apikey)
-      get5daysForecast(lon, lat , apikey)  
+      getForecastUvIndex(lon, lat)
+      get5daysForecast(lon, lat)  
       $('#forecast').append(`<div class="currentday">
       <h1 id="city-title">${cityName}</h1>
       <h4 id="date">Today ${weatherDescription}</h4>
@@ -122,7 +103,7 @@ function getCityRepos(citySearch, apikey) {
 }
 
 // get uv index from the lat, lon
-function getForecastUvIndex(lon, lat , apikey) {
+function getForecastUvIndex(lon, lat) {
   var requestURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${apikey}&lat=${lat}&lon=${lon}`;
   
       fetch (requestURL)
@@ -146,7 +127,7 @@ function getForecastUvIndex(lon, lat , apikey) {
 
 }
 //get 5 days forecast
-function get5daysForecast (lon, lat, apikey) {
+function get5daysForecast (lon, lat) {
   $('#five-days-forecast').empty();
   var requestURL =`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${apikey}`;
   fetch  (requestURL)
@@ -155,7 +136,7 @@ function get5daysForecast (lon, lat, apikey) {
     // console.log(response)
   })
   .then(function (data) {
-    console.log(data)
+    // console.log(data)
     //loop to get next 5 day forecast
     for (var i = 1; i < data.daily.length-2; i ++) {
     var daily = new Date(data.daily[i].dt);
@@ -178,6 +159,6 @@ function get5daysForecast (lon, lat, apikey) {
   });
 }
 citySeachFormEl.addEventListener('submit', formSubmitHandler); 
-// cityHistoryEl.addEventListener('click', buttonSubmitHandler); 
+cityHistoryEl.addEventListener('click', buttonClicktHandler); 
 renderSearchHistory()
 homeWeatherDisplay();
