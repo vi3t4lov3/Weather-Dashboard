@@ -46,7 +46,6 @@ function renderSearchHistory(citySearch) {
    historySearchButton.text(citySearch);
    historySearchButton.attr('data-city', citySearch);
    $('#history-search').append(historySearchButton);
-
 }
 
 // button click handler
@@ -160,5 +159,4 @@ function get5daysForecast (lon, lat) {
 }
 citySeachFormEl.addEventListener('submit', formSubmitHandler); 
 cityHistoryEl.addEventListener('click', buttonClicktHandler); 
-renderSearchHistory()
 homeWeatherDisplay();
