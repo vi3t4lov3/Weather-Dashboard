@@ -51,11 +51,6 @@ function renderSearchHistory(citySearch) {
       historySearch.attr('data-city', keyword);
       $('#history-search').append(historySearch);
   }
-  //  var historySearchButton = $('<button>'); //create a var for the button
-  //  historySearchButton.addClass('btn');
-  //  historySearchButton.text(citySearch);
-  //  historySearchButton.attr('data-city', citySearch);
-  //  $('#history-search').append(historySearchButton);
 }
 
 // button click handler
@@ -138,6 +133,7 @@ function getForecastUvIndex(lon, lat) {
 //get 5 days forecast
 function get5daysForecast (lon, lat) {
   $('#five-days-forecast').empty();
+  $('#hourly-forecast').empty();
   var requestURL =`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${apikey}`;
   fetch  (requestURL)
   .then(function (response) {
@@ -145,7 +141,6 @@ function get5daysForecast (lon, lat) {
     // console.log(response)
   })
   .then(function (data) {
-    // console.log(data)
     //loop to get next 5 day forecast
     for (var i = 1; i < data.daily.length-2; i ++) {
     var daily = new Date(data.daily[i].dt);
@@ -154,7 +149,7 @@ function get5daysForecast (lon, lat) {
     var listWeatherIcon = `https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`;
     var id = `date${i}`;
 
-    //display conntent 5 day forecast to html pages using jquery
+    //display conntent 5 day & hourly forecast to html pages using jquery
     $('#five-days-forecast').addClass('five-days-forecast');
     $('#five-days-forecast').append(`<div class='forecast-box' id='box-${i}'><p id='${id}'></p> </div>`);
     $(`#${id}`).append(`<h4>${listDay}</h4>`);
@@ -165,6 +160,19 @@ function get5daysForecast (lon, lat) {
     $(`#${id}`).append(`<p>Humidity: ${data.daily[i].humidity}%</p>`)
     $(`#${id}`).append(`<p>Wind: ${data.daily[i].wind_speed} MPH</p>`)
     };
+    for (var i = 1; i < data.hourly.length; i++) {
+      var hourly = new Date(data.hourly[i].dt);
+      var listHourly = moment.unix(hourly).format('LT');
+      var hourlyid = `hourly${i}`;
+      // console.log(listHourly);
+      var fhourlyTemp = ((data.hourly[i].temp-273.15)*1.8)+32
+    $('#hourly-forecast').append(`<div class='hourly-box' id='hourlybox-${i}'><p id='${hourlyid}'></p> </div>`);
+    $(`#${hourlyid}`).append(`<p>${listHourly}</p>`);
+    $(`#${hourlyid}`).append(`<p class='icon-weather'><img src="https://openweathermap.org/img/wn/${data.hourly[i].weather[0].icon}@2x.png" width="50" heigh="50"></p>`);
+    $(`#${hourlyid}`).attr('style', 'text-align: center');
+    $(`#${hourlyid}`).append(`<p>${fhourlyTemp.toFixed(0)} °F</p>`)
+    };
+    
   });
 }
 citySeachFormEl.addEventListener('submit', formSubmitHandler); 
