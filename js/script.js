@@ -41,11 +41,21 @@ var formSubmitHandler = function(event) {
 
 //render search cities
 function renderSearchHistory(citySearch) {
-   var historySearchButton = $('<button>'); //create a var for the button
-   historySearchButton.addClass('btn');
-   historySearchButton.text(citySearch);
-   historySearchButton.attr('data-city', citySearch);
-   $('#history-search').append(historySearchButton);
+  $('#history-search').empty();
+  var citiesSearched = JSON.parse(localStorage.getItem('citySearchHistory')) || [];
+  for (var i = 0; i < citiesSearched.length; i++) {
+      var keyword = citiesSearched[i];
+      var historySearch= $('<button>');
+      historySearch.addClass('btn');
+      historySearch.text(keyword);
+      historySearch.attr('data-city', keyword);
+      $('#history-search').append(historySearch);
+  }
+  //  var historySearchButton = $('<button>'); //create a var for the button
+  //  historySearchButton.addClass('btn');
+  //  historySearchButton.text(citySearch);
+  //  historySearchButton.attr('data-city', citySearch);
+  //  $('#history-search').append(historySearchButton);
 }
 
 // button click handler
@@ -160,3 +170,4 @@ function get5daysForecast (lon, lat) {
 citySeachFormEl.addEventListener('submit', formSubmitHandler); 
 cityHistoryEl.addEventListener('click', buttonClicktHandler); 
 homeWeatherDisplay();
+renderSearchHistory();
