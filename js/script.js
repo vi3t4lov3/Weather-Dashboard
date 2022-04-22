@@ -150,9 +150,9 @@ function get5daysForecast (lon, lat) {
     var id = `date${i}`;
 
     //display conntent 5 day & hourly forecast to html pages using jquery
-    $('#five-days-forecast').addClass('five-days-forecast');
-    $('#five-days-forecast').append(`<div class='forecast-box' id='box-${i}'><p id='${id}'></p> </div>`);
-    $(`#${id}`).append(`<h4>${listDay}</h4>`);
+    // $('#five-days-forecast').addClass('col-sm-2');
+    $('#five-days-forecast').append(`<div class='col-sm-2 md-3 lg-5 card mx-1 my-3' id='box-${i}'><p id='${id}'></p> </div>`);
+    $(`#${id}`).append(`<h5>${listDay}</h5>`);
     $(`#${id}`).append(`<p class='icon-weather'><img src="${listWeatherIcon}"></p>`);
     $(`#${id}`).append(`<h6>${data.daily[i].weather[0].description}</h6>`)
     $(`#${id}`).attr('style', 'text-align: center');
