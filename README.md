@@ -26,7 +26,7 @@ THEN I am again presented with current and future conditions for that city
 # Usage
  You can run a local copy of this site by issuing the following commands. 
 ```bash
-$ git clone https://github.com/vi3t4lov3/HW6-Weather-Dashboard.git
+$ git clone https://github.com/vi3t4lov3/Weather-Dashboard.git
 $ cd HW6-Weather-Dashboard
 ```
 ## Contributing
@@ -36,7 +36,7 @@ $ cd HW6-Weather-Dashboard
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 ## The Demo Page
-https://vi3t4lov3.github.io/HW6-Weather-Dashboard/
+https://vi3t4lov3.github.io/Weather-Dashboard/
 
 ![imagename](./img/img1.png)
 
